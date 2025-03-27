@@ -1,5 +1,8 @@
 package Garage;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -14,6 +17,11 @@ public non-sealed class Employee extends Person{
     ArrayList<Person> employees = new ArrayList<Person>();
     ArrayList<Person> sales = new ArrayList<Person>();
     ArrayList<Person> mechanics = new ArrayList<Person>();
+
+    LocalDate date = LocalDate.now();
+    LocalTime time = LocalTime.now();
+    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yy");
+    DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
 
     public Employee() {
         super();
@@ -79,6 +87,8 @@ public non-sealed class Employee extends Person{
         System.out.println("Customer Name: " + cust.getName());
         System.out.println("Customer Address: " + cust.getAddress());
         System.out.println("Employee Name: " + chosenEmp[0]);
+        System.out.println("Date: " + date.format(dateFormat));
+        System.out.println("Time: " + time.format(timeFormat));
         System.out.println("Vehicle Type: " + vehicle.getType());
         System.out.println("Vehicle Make: " + vehicle.getMake());
         System.out.println("Vehicle Model: " + vehicle.getModel());
@@ -101,6 +111,8 @@ public non-sealed class Employee extends Person{
         System.out.println("Customer Name: " + cust.getName());
         System.out.println("Customer Address: " + cust.getAddress());
         System.out.println("Employee Name: " + chosenEmp[0]);
+        System.out.println("Date: " + date.format(dateFormat));
+        System.out.println("Time: " + time.format(timeFormat));
         System.out.println("Vehicle Type: " + vehicle.getType());
         System.out.println("Vehicle Make: " + vehicle.getMake());
         System.out.println("Vehicle Model: " + vehicle.getModel());

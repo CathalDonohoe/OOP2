@@ -1,6 +1,9 @@
 package Garage;
 
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -11,6 +14,11 @@ public class AutoDealership {
     static Scanner sc = new Scanner(System.in);
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
+
+    static LocalDate date = LocalDate.now();
+    static LocalTime time = LocalTime.now();
+    static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yy");
+    static DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
 
     public static void main(String[] args){
 
@@ -60,6 +68,8 @@ public class AutoDealership {
             System.out.println("Customer Name: " + customer.getName());
             System.out.println("Customer Address: " + customer.getAddress());
             System.out.println("Employee Name: " + chosenEmp[0]);
+            System.out.println("Date: " + date.format(dateFormat));
+            System.out.println("Time: " + time.format(timeFormat));
             System.out.println("Vehicle Type: " + vehicle.getType());
             System.out.println("Vehicle Make: " + vehicle.getMake());
             System.out.println("Vehicle Model: " + vehicle.getModel());
