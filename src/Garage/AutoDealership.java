@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class AutoDealership {
 
@@ -178,9 +179,13 @@ public class AutoDealership {
 
         int choice = 34534;
         boolean valid;
+        long numOfEmployees = Stream.of(employees).count();
+        System.out.println("We have " + numOfEmployees + " employees you can choose from today");
         do {
             valid =false;
-            System.out.println("Choose an employee");
+
+            System.out.println("Please choose an employee");
+
             for(var x =0; x<employees.size(); x++){
                 System.out.println(x+1 + "." + employees.get(x).name);
             }

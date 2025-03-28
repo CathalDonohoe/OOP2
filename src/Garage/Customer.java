@@ -1,10 +1,10 @@
 package Garage;
 
-public class Customer {
+public record Customer() {
 
-    private String name;
-    private String address;
-    private double funds;
+    private static String name;
+    private static String address;
+    private static double funds;
 
     public String getName() {
         return name;
