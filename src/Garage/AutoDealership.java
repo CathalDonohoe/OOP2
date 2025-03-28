@@ -1,13 +1,14 @@
 package Garage;
 
+import java.lang.constant.Constable;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class AutoDealership {
@@ -33,6 +34,9 @@ public class AutoDealership {
                 fixCar();
                 break;
             case 3:
+                makeCar();
+                break;
+            case 4:
                 System.exit(0);
                 break;
             default:
@@ -74,8 +78,8 @@ public class AutoDealership {
             System.out.println("Vehicle Type: " + vehicle.getType());
             System.out.println("Vehicle Make: " + vehicle.getMake());
             System.out.println("Vehicle Model: " + vehicle.getModel());
-            System.out.println("Cost: " + realPrice);
-            System.out.println("Payment: " + customer.getFunds() + " - " + realPrice);
+            System.out.println("Cost: " + NumberFormat.getCurrencyInstance(Locale.GERMANY).format(realPrice));
+            System.out.println("Payment: " + NumberFormat.getCurrencyInstance(Locale.GERMANY).format(customer.getFunds()) + " - " + NumberFormat.getCurrencyInstance(Locale.GERMANY).format(realPrice));
             System.out.println("Change: " + df.format(change));
             System.out.println("***********Receipt***********");
 
@@ -142,6 +146,82 @@ public class AutoDealership {
 
         Vehicle vehicle = new Vehicle();
         customer.buyVehicle(vehicleChosen, emp, monthly, chosenEmp);
+    }
+
+    private static void makeCar(){
+        Customer customer = getCustomerInfo();
+        Employee employee = new Employee();
+
+        System.out.println("The minumum price of a new car is:");
+        Optional<Integer> min = Stream.of(26000, 140000, 36000, 56000, 27000, 60000).min((i1, i2)->(i1-i2));
+        min.ifPresent(System.out::println);
+        Optional<Integer> max = Stream.of(26000, 140000, 36000, 56000, 27000, 60000).max((i1, i2)->(i1-i2));
+        System.out.println("The maximum price of a new car is: ");
+        max.ifPresent(System.out::println);
+
+        System.out.println("Who would you like to assist you today? Jane or John? Please enter the name or 'Any'");
+        var custEmp = sc.next();
+        String [] emp= new String[]{"temp"};
+        List<String> names = Arrays.asList("Jane", "John");
+        Predicate<String> pred = name -> name.startsWith("Jo");
+        if (Objects.equals(custEmp, "Any")){
+            Optional<String> any = Stream.of("Jane", "John").findAny();
+            System.out.println("You have been given: " + any.get());
+            emp= new String[]{any.get()};
+        } else if (custEmp.equals("Jane")) {
+            Optional<String> first = Stream.of("Jane", "John").findFirst();
+            System.out.println("You have been given: " + first.get());
+            emp = new String[]{first.get()};
+        } else if (names.stream().allMatch(pred)) {
+            System.out.println("You have been given: John");
+            emp = new String[]{"John"};
+        } else if(names.stream().anyMatch(pred) || names.stream().noneMatch(pred)) {
+            System.out.println("You dont seem to have given a correct answer, John will assist you today");
+            emp = new String[]{"john"};
+        }
+
+        System.out.println("What type of vehicle would you like to make?");
+        var vehType = sc.next();
+        System.out.println("What make of vehicle would you like to make?");
+        var vehMake = sc.next();
+        System.out.println("What model of vehicle would you like to make?");
+        var vehModel = sc.next();
+
+        Stream<String> stream = Stream.of(vehType, vehMake, vehModel);
+        ArrayList<String> carDetails = new ArrayList<String>(stream.toList());
+
+        System.out.println("You wish to make a vehicle type of: ");
+        Stream.of(carDetails.get(0)).filter(type -> type.equals("Car")).forEach(System.out::print);
+        Stream.of(carDetails.get(0)).filter(type -> type.equals("Van")).forEach(System.out::print);
+        Stream.of(carDetails.get(0)).filter(type -> type.equals("Bike")).forEach(System.out::print);
+        System.out.println();
+
+        Optional<Integer> vehPrice = Stream.of(26000, 140000, 36000, 56000, 27000, 60000).findAny();
+
+        Vehicle vehicleChosen = new Vehicle(vehType, vehMake, vehModel, Double.parseDouble(String.valueOf(vehPrice.get())));
+
+        System.out.println("You chose: " + vehicleChosen.getMake() + " " + vehicleChosen.getModel());
+
+        System.out.println("Price: "+vehPrice.get());
+
+        boolean monthly =false;
+
+        String option = String.valueOf(monthly());
+
+        switch (option){
+            case "y", "Y":
+                monthly = true;
+                break;
+            case "n", "N":
+                monthly = false;
+                break;
+            default:
+                monthly();
+        }
+
+        Vehicle vehicle = new Vehicle();
+        customer.buyVehicle(vehicleChosen, employee, monthly, emp);
+
     }
 
     private static String monthly() {
@@ -213,10 +293,12 @@ public class AutoDealership {
         sc.nextLine();
         Customer customer = new Customer();
         System.out.println("Please enter your name:");
-        customer.setName(sc.nextLine());
+        var custName = sc.nextLine();
+        customer.setName(custName);
         System.out.println("Please enter your address: ");
-        customer.setAddress(sc.nextLine());
-
+        var custAddress = sc.nextLine();
+        customer.setAddress(custAddress);
+        double custFunds = 0;
         boolean valid;
         do {
             valid = false;
@@ -226,11 +308,15 @@ public class AutoDealership {
                 Double.parseDouble(custInputFunds);
                 valid = true;
                 customer.setFunds(Double.parseDouble(custInputFunds));
+                custFunds = Double.parseDouble(custInputFunds);
 
             } catch (NumberFormatException e) {
                 System.out.println("You have not entered a valid number. Please only use digits and decimal points");
             }
         } while (!valid);
+
+        System.out.println("The details you entered were: ");
+        Stream.of(custName, custAddress, custFunds).map(s->s.toString()).forEach(System.out::println);
 
         return customer;
     }
@@ -243,7 +329,8 @@ public class AutoDealership {
             System.out.println("*********************************************************************");
             System.out.println("1. Buy a vehicle");
             System.out.println("2. Fix a vehicle");
-            System.out.println("3. exit");
+            System.out.println("3. Buy a brand new vehicle");
+            System.out.println("4. exit");
             custOption = sc.next();
 
             if (Objects.equals(custOption, "1") || Objects.equals(custOption, "2") || Objects.equals(custOption, "3")) {

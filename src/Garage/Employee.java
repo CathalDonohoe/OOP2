@@ -1,9 +1,11 @@
 package Garage;
 
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
@@ -41,6 +43,10 @@ public non-sealed class Employee extends Person{
         employees.add(p2);
         employees.add(p3);
         employees.add(p4);
+    }
+
+    public ArrayList<Person> getEmployees() {
+        return employees;
     }
 
 
@@ -93,9 +99,9 @@ public non-sealed class Employee extends Person{
         System.out.println("Vehicle Type: " + vehicle.getType());
         System.out.println("Vehicle Make: " + vehicle.getMake());
         System.out.println("Vehicle Model: " + vehicle.getModel());
-        System.out.println("Cost: " + d[0]);
-        System.out.println("Payment: " + cust.getFunds() + " - " + d[0]);
-        System.out.println("Change: " + change);
+        System.out.println("Cost: "+ NumberFormat.getCurrencyInstance(Locale.GERMANY).format(d[0]));
+        System.out.println("Payment: " + NumberFormat.getCurrencyInstance(Locale.GERMANY).format(cust.getFunds()) + " - " + NumberFormat.getCurrencyInstance(Locale.GERMANY).format(d[0]));
+        System.out.println("Change: " + NumberFormat.getCurrencyInstance(Locale.GERMANY).format(change));
         System.out.println("***********Receipt***********");
 
         cust.setFunds(change);
@@ -117,7 +123,7 @@ public non-sealed class Employee extends Person{
         System.out.println("Vehicle Type: " + vehicle.getType());
         System.out.println("Vehicle Make: " + vehicle.getMake());
         System.out.println("Vehicle Model: " + vehicle.getModel());
-        System.out.println("Cost: " + price);
+        System.out.println("Cost: " + NumberFormat.getCurrencyInstance(Locale.GERMANY).format(price));
         System.out.println("Customer to pay monthly");
         System.out.println("***********Receipt***********");
     }
