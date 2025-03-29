@@ -1,6 +1,10 @@
 package Garage;
 
-import java.lang.constant.Constable;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
@@ -8,7 +12,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 public class AutoDealership {
@@ -37,6 +42,10 @@ public class AutoDealership {
                 makeCar();
                 break;
             case 4:
+                additionalFeatures();
+                break;
+            case 5:
+                System.out.println("Thank you, Good Bye");
                 System.exit(0);
                 break;
             default:
@@ -84,6 +93,24 @@ public class AutoDealership {
             System.out.println("***********Receipt***********");
 
             customer.setFunds(change);
+
+            Path p1 = Paths.get("C:\\Users\\cathal.donohoe\\IdeaProjects\\OOP2\\src\\Garage\\receipt.txt");
+            try {
+                String data = "***********Receipt***********\n"
+                        + "Customer Name: " + customer.getName() +"\n"
+                        + "Customer Address: " + customer.getAddress() + "\n"
+                        +"Employee Name: " + chosenEmp[0]  +"\n"
+                        +"Date: " + date.format(dateFormat) + "\n"
+                        +"Time: " + time.format(timeFormat) + "\n"
+                        +"Vehicle Type: " + vehicle.getType() + "\n"
+                        +"Vehicle Make: " + vehicle.getMake() + "\n"
+                        +"Vehicle Model: " + vehicle.getModel() + "\n"
+                        +"Cost: " +  customer.getFunds() + " € - " + realPrice + " €\n"
+                        +"***********Receipt***********";
+                Files.write(p1, data.getBytes(), StandardOpenOption.CREATE);
+            } catch (IOException e) {
+                Logger.getLogger(AutoDealership.class.getName()).log(Level.SEVERE, null, e);
+            }
 
         }else{
             System.out.println("You have insufficent funds for this repair");
@@ -224,6 +251,17 @@ public class AutoDealership {
 
     }
 
+    private static void additionalFeatures(){
+
+        Path p1 = Paths.get("C:\\Users\\cathal.donohoe\\IdeaProjects\\OOP2\\src\\Garage\\test.txt");
+        try {
+            Files.createFile(p1);
+        } catch (IOException e) {
+            Logger.getLogger(AutoDealership.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+    }
+
     private static String monthly() {
         boolean valid = false;
         String option="g";
@@ -330,10 +368,11 @@ public class AutoDealership {
             System.out.println("1. Buy a vehicle");
             System.out.println("2. Fix a vehicle");
             System.out.println("3. Buy a brand new vehicle");
-            System.out.println("4. exit");
+            System.out.println("4. Execute additional features");
+            System.out.println("5. exit");
             custOption = sc.next();
 
-            if (Objects.equals(custOption, "1") || Objects.equals(custOption, "2") || Objects.equals(custOption, "3")) {
+            if (Objects.equals(custOption, "1") || Objects.equals(custOption, "2") || Objects.equals(custOption, "3") || Objects.equals(custOption, "4") || Objects.equals(custOption, "5")) {
                 valid=true;
             }else{
                 System.out.println("You have not given a valid option, please select one of the following");

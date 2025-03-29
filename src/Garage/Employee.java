@@ -1,5 +1,12 @@
 package Garage;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -8,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 public non-sealed class Employee extends Person{
@@ -106,7 +115,26 @@ public non-sealed class Employee extends Person{
 
         cust.setFunds(change);
 
+        Path p1 = Paths.get("C:\\Users\\cathal.donohoe\\IdeaProjects\\OOP2\\src\\Garage\\receipt.txt");
+        try {
+            String data = "***********Receipt***********\n"
+                    + "Customer Name: " + cust.getName() +"\n"
+                    + "Customer Address: " + cust.getAddress() + "\n"
+                    +"Employee Name: " + chosenEmp[0]  +"\n"
+                    +"Date: " + date.format(dateFormat) + "\n"
+                    +"Time: " + time.format(timeFormat) + "\n"
+                    +"Vehicle Type: " + vehicle.getType() + "\n"
+                    +"Vehicle Make: " + vehicle.getMake() + "\n"
+                    +"Vehicle Model: " + vehicle.getModel() + "\n"
+                    +"Cost: " +  cust.getFunds() + " € - " + d[0] + " €\n"
+                    +"***********Receipt***********";
+            Files.write(p1, data.getBytes(), StandardOpenOption.CREATE);
+        } catch (IOException e) {
+            Logger.getLogger(AutoDealership.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
+
+
 
     public void processTransaction(double price, double funds, Customer cust, Vehicle vehicle, String[] chosenEmp, double balanceLoan) {
         System.out.println("Checking if loan is valid...");
@@ -126,5 +154,26 @@ public non-sealed class Employee extends Person{
         System.out.println("Cost: " + NumberFormat.getCurrencyInstance(Locale.GERMANY).format(price));
         System.out.println("Customer to pay monthly");
         System.out.println("***********Receipt***********");
+
+
+        Path p1 = Paths.get("C:\\Users\\cathal.donohoe\\IdeaProjects\\OOP2\\src\\Garage\\receipt.txt");
+        try {
+            String data = "***********Receipt***********\n"
+                    + "Customer Name: " + cust.getName() +"\n"
+                    + "Customer Address: " + cust.getAddress() + "\n"
+                    +"Employee Name: " + chosenEmp[0]  +"\n"
+                    +"Date: " + date.format(dateFormat) + "\n"
+                    +"Time: " + time.format(timeFormat) + "\n"
+                    +"Vehicle Type: " + vehicle.getType() + "\n"
+                    +"Vehicle Make: " + vehicle.getMake() + "\n"
+                    +"Vehicle Model: " + vehicle.getModel() + "\n"
+                    +"Cost: " + price + " €\n"
+                    +"Customer to pay monthly \n"
+                    +"***********Receipt***********";
+            Files.write(p1, data.getBytes(), StandardOpenOption.CREATE);
+        } catch (IOException e) {
+            Logger.getLogger(AutoDealership.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
+
 }
