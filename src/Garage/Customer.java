@@ -1,5 +1,7 @@
 package Garage;
 
+import java.io.IOException;
+
 public record Customer() {
 
     private static String name;
@@ -30,7 +32,7 @@ public record Customer() {
         this.funds = funds;
     }
 
-    public void buyVehicle(Vehicle vehicle, Employee employee, boolean monthlyPayment, String[] chosenEmp){
+    public void buyVehicle(Vehicle vehicle, Employee employee, boolean monthlyPayment, String[] chosenEmp) throws IOException {
         employee.handleCustomer(this, monthlyPayment, vehicle, chosenEmp);
     }
 }

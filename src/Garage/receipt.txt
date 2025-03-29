@@ -1,12 +1,11 @@
 ***********Receipt***********
-Customer Name: gdfgdg
-Customer Address: fetevbvdf
+Customer Name: sdfsd
+Customer Address: sdfsdf
 Employee Name: Alex Smith
 Date: 29-03-25
-Time: 15:37
-Vehicle Type: ddw
-Vehicle Make: dsfsf
-Vehicle Model: regerg
-Cost: 318265.55 € - 5977.45 €
-Customer to pay monthly 
+Time: 16:41
+Vehicle Type: dsfsdf
+Vehicle Make: sdfsdf
+Vehicle Model: sdfsd
+Cost: 3236379.83 € - 5962.17 €
 ***********Receipt***********

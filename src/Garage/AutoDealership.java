@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
-public class AutoDealership {
+public class AutoDealership{
 
     static Scanner sc = new Scanner(System.in);
 
@@ -27,7 +27,7 @@ public class AutoDealership {
     static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yy");
     static DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
 
         int custOption = Integer.parseInt(hello());
 
@@ -54,7 +54,7 @@ public class AutoDealership {
         }
     }
 
-    private static void fixCar() {
+    private static void fixCar() throws IOException {
         Customer customer = getCustomerInfo();
         Vehicle vehicle = new Vehicle();
         String[] chosenEmp = getEmployee(2);
@@ -76,7 +76,7 @@ public class AutoDealership {
         System.out.println("Your funds are: " + customer.getFunds() + " Euro");
         if(customer.getFunds()>realPrice){
             double change = customer.getFunds() - realPrice;
-            System.out.println("You have sufficent funds");
+            System.out.println("You have sufficient funds");
             System.out.println();
             System.out.println("***********Receipt***********");
             System.out.println("Customer Name: " + customer.getName());
@@ -95,6 +95,7 @@ public class AutoDealership {
             customer.setFunds(change);
 
             Path p1 = Paths.get("C:\\Users\\cathal.donohoe\\IdeaProjects\\OOP2\\src\\Garage\\receipt.txt");
+            Files.delete(p1);
             try {
                 String data = "***********Receipt***********\n"
                         + "Customer Name: " + customer.getName() +"\n"
@@ -118,7 +119,7 @@ public class AutoDealership {
 
     }
 
-    private static void buyCar() {
+    private static void buyCar() throws IOException {
 
         Employee emp = new Employee();
 
@@ -175,7 +176,7 @@ public class AutoDealership {
         customer.buyVehicle(vehicleChosen, emp, monthly, chosenEmp);
     }
 
-    private static void makeCar(){
+    private static void makeCar() throws IOException {
         Customer customer = getCustomerInfo();
         Employee employee = new Employee();
 
@@ -190,7 +191,7 @@ public class AutoDealership {
         var custEmp = sc.next();
         String [] emp= new String[]{"temp"};
         List<String> names = Arrays.asList("Jane", "John");
-        Predicate<String> pred = name -> name.startsWith("Jo");
+        Predicate<String> pred = name -> name.startsWith("John");
         if (Objects.equals(custEmp, "Any")){
             Optional<String> any = Stream.of("Jane", "John").findAny();
             System.out.println("You have been given: " + any.get());
@@ -199,12 +200,12 @@ public class AutoDealership {
             Optional<String> first = Stream.of("Jane", "John").findFirst();
             System.out.println("You have been given: " + first.get());
             emp = new String[]{first.get()};
-        } else if (names.stream().allMatch(pred)) {
+        } else if (names.stream().anyMatch(pred) && custEmp.equals("John")) {
             System.out.println("You have been given: John");
             emp = new String[]{"John"};
-        } else if(names.stream().anyMatch(pred) || names.stream().noneMatch(pred)) {
-            System.out.println("You dont seem to have given a correct answer, John will assist you today");
-            emp = new String[]{"john"};
+        } else if(!names.stream().allMatch(pred) || names.stream().noneMatch(pred)) {
+            System.out.println("You don't seem to have given a correct answer, John will assist you today");
+            emp = new String[]{"John"};
         }
 
         System.out.println("What type of vehicle would you like to make?");
@@ -253,14 +254,12 @@ public class AutoDealership {
 
     private static void additionalFeatures(){
 
-        Path p1 = Paths.get("C:\\Users\\cathal.donohoe\\IdeaProjects\\OOP2\\src\\Garage\\test.txt");
-        try {
-            Files.createFile(p1);
-        } catch (IOException e) {
-            Logger.getLogger(AutoDealership.class.getName()).log(Level.SEVERE, null, e);
+        for(int i = 0; i <5; i++){
+            Threading threading = new Threading(i);
+            threading.start();
         }
-
     }
+
 
     private static String monthly() {
         boolean valid = false;
@@ -297,7 +296,7 @@ public class AutoDealership {
 
         int choice = 34534;
         boolean valid;
-        long numOfEmployees = Stream.of(employees).count();
+        long numOfEmployees = Stream.of(employees).count() + 1;
         System.out.println("We have " + numOfEmployees + " employees you can choose from today");
         do {
             valid =false;
@@ -368,7 +367,7 @@ public class AutoDealership {
             System.out.println("1. Buy a vehicle");
             System.out.println("2. Fix a vehicle");
             System.out.println("3. Buy a brand new vehicle");
-            System.out.println("4. Execute additional features");
+            System.out.println("4. Call Taxi");
             System.out.println("5. exit");
             custOption = sc.next();
 

@@ -83,7 +83,7 @@ public non-sealed class Employee extends Person{
         return mechanics;
     }
 
-    public void handleCustomer(Customer cust, boolean monthlyPayments, Vehicle vehicle, String[] chosenEmp){
+    public void handleCustomer(Customer cust, boolean monthlyPayments, Vehicle vehicle, String[] chosenEmp) throws IOException {
 
         if (monthlyPayments){
             double balanceLoan = vehicle.getPrice() - cust.getFunds();
@@ -95,7 +95,7 @@ public non-sealed class Employee extends Person{
         }
     }
 
-    private void processTransaction(Customer cust, Vehicle vehicle, String[] chosenEmp, double... d) {
+    private void processTransaction(Customer cust, Vehicle vehicle, String[] chosenEmp, double... d) throws IOException {
         var change = d[1] - d[0];
         System.out.println("Transaction complete for " + vehicle);
         System.out.println();
@@ -116,6 +116,7 @@ public non-sealed class Employee extends Person{
         cust.setFunds(change);
 
         Path p1 = Paths.get("C:\\Users\\cathal.donohoe\\IdeaProjects\\OOP2\\src\\Garage\\receipt.txt");
+        Files.delete(p1);
         try {
             String data = "***********Receipt***********\n"
                     + "Customer Name: " + cust.getName() +"\n"
@@ -136,7 +137,7 @@ public non-sealed class Employee extends Person{
 
 
 
-    public void processTransaction(double price, double funds, Customer cust, Vehicle vehicle, String[] chosenEmp, double balanceLoan) {
+    public void processTransaction(double price, double funds, Customer cust, Vehicle vehicle, String[] chosenEmp, double balanceLoan) throws IOException {
         System.out.println("Checking if loan is valid...");
         System.out.println("Loan has been approved");
 
@@ -157,6 +158,7 @@ public non-sealed class Employee extends Person{
 
 
         Path p1 = Paths.get("C:\\Users\\cathal.donohoe\\IdeaProjects\\OOP2\\src\\Garage\\receipt.txt");
+        Files.delete(p1);
         try {
             String data = "***********Receipt***********\n"
                     + "Customer Name: " + cust.getName() +"\n"
