@@ -1,11 +1,12 @@
 ***********Receipt***********
-Customer Name: sdfsd
-Customer Address: sdfsdf
-Employee Name: Alex Smith
-Date: 29-03-25
-Time: 16:41
-Vehicle Type: dsfsdf
-Vehicle Make: sdfsdf
-Vehicle Model: sdfsd
-Cost: 3236379.83 € - 5962.17 €
+Customer Name: Jill
+Customer Address: 34 Beech drive
+Employee Name: Jane Doe
+Date: 30-03-25
+Time: 13:14
+Vehicle Type: Van
+Vehicle Make: Renault
+Vehicle Model: Traffic
+Cost: 17000.0 €
+Customer to pay monthly 
 ***********Receipt***********

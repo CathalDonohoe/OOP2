@@ -42,7 +42,7 @@ public class AutoDealership{
                 makeCar();
                 break;
             case 4:
-                additionalFeatures();
+                calltaxi();
                 break;
             case 5:
                 System.out.println("Thank you, Good Bye");
@@ -252,7 +252,7 @@ public class AutoDealership{
 
     }
 
-    private static void additionalFeatures(){
+    private static void calltaxi(){
 
         for(int i = 0; i <5; i++){
             Threading threading = new Threading(i);

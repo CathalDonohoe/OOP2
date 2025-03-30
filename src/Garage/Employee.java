@@ -1,7 +1,5 @@
 package Garage;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,7 +15,6 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
 
 public non-sealed class Employee extends Person{
 
@@ -97,7 +94,7 @@ public non-sealed class Employee extends Person{
 
     private void processTransaction(Customer cust, Vehicle vehicle, String[] chosenEmp, double... d) throws IOException {
         var change = d[1] - d[0];
-        System.out.println("Transaction complete for " + vehicle);
+        System.out.println("Transaction complete for " + vehicle.getMake() + " " + vehicle.getModel());
         System.out.println();
         System.out.println("***********Receipt***********");
         System.out.println("Customer Name: " + cust.getName());
@@ -141,7 +138,7 @@ public non-sealed class Employee extends Person{
         System.out.println("Checking if loan is valid...");
         System.out.println("Loan has been approved");
 
-        System.out.println("Transaction complete for " + vehicle);
+        System.out.println("Transaction complete for " + vehicle.getMake() + " " + vehicle.getModel());
         System.out.println();
         System.out.println("***********Receipt***********");
         System.out.println("Customer Name: " + cust.getName());
